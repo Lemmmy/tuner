@@ -71,9 +71,9 @@ export function renderFreqCanvas(
   ctx.textAlign = "center";
   drawHzText(ctx, null, referenceFreq, textY, sampScale, hzScale, "center", " (A4)");
   drawHzText(ctx, null, midiNoteToFreq(minNote, referenceFreq), textY, sampScale, hzScale, "center",
-    ` (${midiNoteToName(minNote)})`);
+    ` (${midiNoteToName(minNote).join("")})`);
   drawHzText(ctx, null, midiNoteToFreq(maxNote, referenceFreq), textY, sampScale, hzScale, "center",
-    ` (${midiNoteToName(maxNote)})`);
+    ` (${midiNoteToName(maxNote).join("")})`);
 
   ctx.textAlign = "right";
   drawHzText(ctx, width, null, textY, sampScale, hzScale, "right");
