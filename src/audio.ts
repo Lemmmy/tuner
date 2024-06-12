@@ -113,18 +113,23 @@ export class AudioShenanigans {
         const sortedFreqs = this.pendingLockInDetections.slice()
           .sort((a, b) => a.freq - b.freq)
           .map(d => d.freq);
+
         const q1 = quantileSorted(sortedFreqs, 0.25)!;
         const q2 = quantileSorted(sortedFreqs, 0.5)!;
         const q3 = quantileSorted(sortedFreqs, 0.75)!;
+
+        const q1Note = freqToMidiNote(q1, options.referenceFreq);
+        const q2Note = freqToMidiNote(q2, options.referenceFreq);
+        const q3Note = freqToMidiNote(q3, options.referenceFreq);
 
         const lockedInDetection: LockedInDetection = {
           startTime: this.pendingLockInStartTime,
           endTime: now,
           detections: this.pendingLockInDetections,
-          q1, q1Cents: midiNoteToCents(q1),
-          q2, q2Cents: midiNoteToCents(q2),
-          q3, q3Cents: midiNoteToCents(q3),
-          midiNote: freqToMidiNote(q2, options.referenceFreq),
+          q1, q1Cents: midiNoteToCents(q1Note),
+          q2, q2Cents: midiNoteToCents(q2Note),
+          q3, q3Cents: midiNoteToCents(q3Note),
+          midiNote: q2Note,
         };
 
         console.log(lockedInDetection);

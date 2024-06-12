@@ -1,7 +1,7 @@
 import { scaleLinear } from "d3-scale";
 import memoizee from "memoizee";
 import { RefObject } from "react";
-import { midiNoteToCents, midiNoteToName, midiNoteToNameAndCents } from "../midi.ts";
+import { midiNoteToCents, midiNoteToNameAndCents } from "../midi.ts";
 import { Detection } from "../state/audioSlice.ts";
 
 const memoLinear = memoizee((width: number) =>
@@ -93,6 +93,6 @@ export function renderPitchDisplay(
 
     ctx.font = "bold 14px sans-serif";
     ctx.textAlign = "right";
-    ctx.fillText(`${lastDetection.freq.toFixed(1)} Hz`, innerX + innerWidth - 1, height - 10);
+    ctx.fillText(`${lastDetection.freq.toFixed(1)} Hz`, innerX + innerWidth - 1, innerHeight + 16);
   }
 }

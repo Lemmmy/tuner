@@ -3,7 +3,7 @@ import { scaleLinear } from "d3-scale";
 import memoizee from "memoizee";
 import { HTMLProps, useMemo } from "react";
 import { useSelector } from "react-redux";
-import { freqToMidiNote, midiNoteToName } from "../midi.ts";
+import { midiNoteToName } from "../midi.ts";
 import { LockedInDetection } from "../state/audioSlice.ts";
 import { RootState } from "../state/store.ts";
 
@@ -13,7 +13,7 @@ export function ResultsTable() {
   const domain = useMemo(() => {
     const furthestQ1 = Math.max(...lockedInArray.map(d => Math.abs(d.q1Cents)));
     const furthestQ3 = Math.max(...lockedInArray.map(d => Math.abs(d.q3Cents)));
-    return Math.max(Math.min(Math.ceil(Math.max(furthestQ1, furthestQ3)) + 5, 50), 20);
+    return Math.max(Math.min(Math.ceil(Math.max(furthestQ1, furthestQ3)) + 5, 50), 10);
   }, [lockedInArray]);
 
   return <table className="w-full border border-black">
@@ -33,12 +33,8 @@ export function ResultsTable() {
 
 const barScale = memoizee((domain) => scaleLinear().domain([-domain, domain]).range([0, 100]));
 
-function Result({ q2, q1Cents, q2Cents, q3Cents, domain }: LockedInDetection & { domain: number }) {
-  const referenceFreq = useSelector((s: RootState) => s.options.referenceFreq);
-
-  const q2Note = freqToMidiNote(q2, referenceFreq);
-  const [noteName, octave] = midiNoteToName(q2Note);
-
+function Result({ q2, midiNote, q1Cents, q2Cents, q3Cents, domain }: LockedInDetection & { domain: number }) {
+  const [noteName, octave] = midiNoteToName(midiNote);
   const scale = barScale(domain);
   const q1Pct = scale(q1Cents);
   const q2Pct = scale(q2Cents);

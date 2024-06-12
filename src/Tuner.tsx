@@ -3,9 +3,9 @@ import { useCallback, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AudioShenanigans } from "./audio.ts";
 import { clearLockedInDetections } from "./state/audioSlice.ts";
+import { RootState } from "./state/store.ts";
 import { FrequencyViz } from "./viz/FrequencyViz.tsx";
 import { PitchDisplay } from "./viz/PitchDisplay.tsx";
-import { RootState } from "./state/store.ts";
 import { ResultsTable } from "./viz/ResultsTable.tsx";
 
 function onError(e: any) {
